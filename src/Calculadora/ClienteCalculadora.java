@@ -1,4 +1,4 @@
-package Calculadoramonohilo;
+package Calculadora;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Created by 47257165p on 10/02/16.
  */
-public class ClienteCalculadoraMonoHilo {
+public class ClienteCalculadora {
 
     private static Scanner in = new Scanner(System.in);
 
@@ -21,18 +21,22 @@ public class ClienteCalculadoraMonoHilo {
 
             try
             {
+                //Creamos el socket con el que nos comunicaremos
                 Socket socket = new Socket();
                 InetSocketAddress address = new InetSocketAddress("localhost", 5555);
                 socket.connect(address);
-                InputStream input = socket.getInputStream();
-                OutputStream output = socket.getOutputStream();
-                output.write(operacion.getBytes());
+                InputStream iS = socket.getInputStream();
+                OutputStream oS = socket.getOutputStream();
+
+                //Enviamos la operación a realizar
+                oS.write(operacion.getBytes());
 
 
+                //Creamos un contador y un array de bytes para limpiarlo cuando recibamos el mensaje del servidor
                 Integer contador=0;
                 byte[] mensaje = new byte[50];
 
-                input.read(mensaje);
+                iS.read(mensaje);
                 for (byte aMensaje : mensaje) {
                     if (aMensaje == 0) {
                         break;
@@ -42,6 +46,15 @@ public class ClienteCalculadoraMonoHilo {
                 }
                 byte[] mensajeLimpio = new byte[contador];
                 System.arraycopy(mensaje, 0, mensajeLimpio, 0, mensajeLimpio.length);
+                String mensajeLimpioString = new String (mensajeLimpio);
+
+                //Después de limpiar el array de bytes lo mostramos parseándolo a String
+                System.out.println("Operación = "+operacion);
+                System.out.println("Resultado = "+mensajeLimpioString);
+                iS.close();
+                oS.close();
+                socket.close();
+                in.close();
             } catch(IOException ignored){}
         }
 }
