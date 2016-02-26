@@ -1,33 +1,25 @@
-package Calculadora;
+package CalculadoraMultiHilo;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.*;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Arrays;
 
 /**
- * Created by 47257165p on 10/02/16.
+ * Created by 47257165p on 26/02/16.
  */
-public class ServidorCalculadora {
+public class HiloTrabajo extends Thread {
 
-    private static InetSocketAddress address = new InetSocketAddress("localhost", 5555);
+    public HiloTrabajo() {
+    }
 
-    public static void main(String[] args) {
-
+    public void run(Socket input) {
         try {
-            //Creamos el socket con el que nos comunicaremos
-            ServerSocket serverSocket = new ServerSocket();
-            serverSocket.bind(address);
-
-            System.out.println("Servidor calculadora escuchando...");
-            Socket listener = serverSocket.accept();
-
-            InputStream iS = listener.getInputStream();
-            OutputStream oS = listener.getOutputStream();
+            InputStream iS = input.getInputStream();
+            OutputStream oS = input.getOutputStream();
 
 
             //Creamos un array de bytes para parsearlo y limpiarlo
@@ -48,15 +40,13 @@ public class ServidorCalculadora {
             System.arraycopy(mensaje, 0, mensajeLimpio, 0, mensajeLimpio.length);
 
             String mensajeLimpioString = new String(mensajeLimpio);
-            System.out.println("Cálculo a realizar = "+mensajeLimpioString);
+            System.out.println("Cálculo a realizar = " + mensajeLimpioString);
 
             String resultado = StringEngineCalc(mensajeLimpioString);
 
             //tras parsearlo y realizar la operación lo enviamos al enviarCorreo
             oS.write(resultado.getBytes());
-            System.out.println("Resultado del cálculo: "+resultado);
-
-
+            System.out.println("Resultado del cálculo: " + resultado);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,3 +65,4 @@ public class ServidorCalculadora {
         return calculo;
     }
 }
+

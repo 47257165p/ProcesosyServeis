@@ -32,7 +32,7 @@ import java.net.Socket;
 public class ClienteSocketStream {
 
     public static void main(String[] args) {
-        System.out.println("Creado el socket cliente");
+        System.out.println("Creado el socket enviarCorreo");
         Socket clienteSocket = new Socket();
         System.out.println("Estableciendo connexión");
 

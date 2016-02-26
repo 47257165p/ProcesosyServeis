@@ -17,7 +17,7 @@ public class ServidorSocketStream {
 
         System.out.println("Creando servidor");
 
-        /*El constructor del serversocket es diferente que el del cliente.
+        /*El constructor del serversocket es diferente que el del enviarCorreo.
         Tiene métodos que el normal no tiene.
          */
 
