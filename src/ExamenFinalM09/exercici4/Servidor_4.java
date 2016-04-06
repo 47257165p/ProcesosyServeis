@@ -1,21 +1,17 @@
-package CalculadoraMultiHilo;
+package ExamenFinalM09.exercici4;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import CalculadoraMultiHilo.HiloTrabajo;
+
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Created by 47257165p on 10/02/16.
+ * Created by 47257165p on 09/03/16.
  */
-public class ServidorCalculadora {
+public class Servidor_4 {
 
-    private static InetSocketAddress address = new InetSocketAddress("localhost", 5555);
+    private static InetSocketAddress address = new InetSocketAddress("localhost", 9090);
 
     public static void main(String[] args) {
 
@@ -24,11 +20,11 @@ public class ServidorCalculadora {
             ServerSocket serverSocket = new ServerSocket();
             serverSocket.bind(address);
 
-            System.out.println("Servidor1_2_3 calculadora escuchando...");
+            System.out.println("Servidor escuchando...");
 
             while (true) {
                 Socket input = serverSocket.accept();
-                HiloTrabajo hilo = new HiloTrabajo();
+                HiloServidor4 hilo = new HiloServidor4();
                 hilo.run(input);
             }
         }

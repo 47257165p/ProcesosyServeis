@@ -15,7 +15,7 @@ package Cliente_Servidor_Ejemplo; /**
  */
 
 /**
- * Cliente - Servidor: Cliente era quien pedia información y el servidor quien tenia una serie
+ * Cliente - Servidor1_2_3: Cliente era quien pedia información y el servidor quien tenia una serie
  * de recursos que puede ser solicitados.
  */
 
